@@ -1,17 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Platform} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
-import {Home} from "./src/Home";
-import {SecondPage} from "./src/SecondPage";
+import {Home} from "./src/features/Home";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {createMaterialBottomTabNavigator} from "react-native-paper/react-navigation";
-import {SafeAreaConsumer, SafeAreaProvider} from "react-native-safe-area-context";
+import { SafeAreaProvider} from "react-native-safe-area-context";
+import {ModuleButton} from "./src/features/ModuleButton/ModuleButton";
+import {ModuleWire} from "./src/features/ModuleWire/ModuleWire";
+
 const thisPlatform = Platform.OS
 
 let Tab =createMaterialBottomTabNavigator()
-
+let TabOptions = {
+}
 if(thisPlatform === 'ios'){
      Tab = createNativeStackNavigator();
+     TabOptions = {
+         ...TabOptions,
+         unMountOnBlur: true,
+     }
 }
 
 export default function App() {
@@ -20,18 +26,11 @@ export default function App() {
           <NavigationContainer>
               <Tab.Navigator>
                   <Tab.Screen name="Home" component={Home} />
-                  <Tab.Screen name="SecondPage" component={SecondPage} />
+                  <Tab.Screen name="Button" component={ModuleButton} options={TabOptions} />
+                  <Tab.Screen name="Wire" component={ModuleWire} options={TabOptions} />
               </Tab.Navigator>
           </NavigationContainer>
       </SafeAreaProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
