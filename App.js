@@ -1,12 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
+import {Home} from "./src/Home";
+import {SecondPage} from "./src/SecondPage";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {createMaterialBottomTabNavigator} from "react-native-paper/react-navigation";
+import {SafeAreaConsumer, SafeAreaProvider} from "react-native-safe-area-context";
+const thisPlatform = Platform.OS
+
+let Tab =createMaterialBottomTabNavigator()
+
+if(thisPlatform === 'ios'){
+     Tab = createNativeStackNavigator();
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <SafeAreaProvider>
+          <NavigationContainer>
+              <Tab.Navigator>
+                  <Tab.Screen name="Home" component={Home} />
+                  <Tab.Screen name="SecondPage" component={SecondPage} />
+              </Tab.Navigator>
+          </NavigationContainer>
+      </SafeAreaProvider>
   );
 }
 
