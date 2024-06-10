@@ -6,6 +6,9 @@ import {createMaterialBottomTabNavigator} from "react-native-paper/react-navigat
 import { SafeAreaProvider} from "react-native-safe-area-context";
 import {ModuleButton} from "./src/features/ModuleButton/ModuleButton";
 import {ModuleWire} from "./src/features/ModuleWire/ModuleWire";
+import House from './assets/house-solid.svg'
+import Circle from './assets/circle-dot-solid.svg'
+import ToiletPaper from './assets/toilet-paper-solid.svg'
 
 const thisPlatform = Platform.OS
 
@@ -25,9 +28,11 @@ export default function App() {
       <SafeAreaProvider>
           <NavigationContainer>
               <Tab.Navigator>
-                  <Tab.Screen name="Home" component={Home} />
-                  <Tab.Screen name="Button" component={ModuleButton} options={TabOptions} />
-                  <Tab.Screen name="Wire" component={ModuleWire} options={TabOptions} />
+                  <Tab.Screen name="Home" component={Home}
+                              options={{tabBarIcon: ((color) => (<House/>))}}
+                  />
+                  <Tab.Screen name="Button" component={ModuleButton} options={{...TabOptions,tabBarIcon: ((color) => (<Circle/>))}} />
+                  <Tab.Screen name="Wire" component={ModuleWire} options={{...TabOptions,tabBarIcon: ((color) => (<ToiletPaper/>))}} />
               </Tab.Navigator>
           </NavigationContainer>
       </SafeAreaProvider>

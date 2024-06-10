@@ -1,6 +1,5 @@
 import {View, StyleSheet, Text} from "react-native";
 import BatteryIcon from '../../assets/battery-full-solid.svg'
-
 export const Battery = ({howMany})=> {
     return(
         <View style={styles.container}>
