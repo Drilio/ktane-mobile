@@ -1,4 +1,4 @@
-import {Button, StyleSheet, Text, View} from "react-native";
+import {Button, Image, StyleSheet, Text, View} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
 import {useCallback, useEffect, useState} from "react";
 import {SafeAreaComponent} from "../../SafeAreaComponent";
@@ -8,18 +8,21 @@ import {ButtonSymbols} from "./ButtonSymbols";
 
 export const ModuleSymbols = ()=>{
     const [pickedSymbols, setPickedSymbols] = useState([]);
-
+    const [rightSequence, setRightSequence] = useState([]);
     const isFocused = useIsFocused();
-    useEffect(()=>{},[isFocused]);
-    console.log('JAI RELOAD')
+
+    useEffect(()=>{
+        setPickedSymbols([]);
+        setRightSequence([]);
+    },[isFocused]);
+
     const handlePickingSymbol= useCallback((newSymbol)=>{
+        console.log(newSymbol);
         setPickedSymbols(currentSymbols => {
             const isSymbolIncluded = currentSymbols.some(symbol => symbol.name === newSymbol.name);
             if (isSymbolIncluded) {
-                console.log('remove', currentSymbols);
                 return currentSymbols.filter(symbol => symbol.name !== newSymbol.name);
             } else {
-                console.log('add', currentSymbols);
                 return [...currentSymbols, newSymbol];
             }
         });
@@ -27,9 +30,9 @@ export const ModuleSymbols = ()=>{
 
 
     const handleRightSequence = useCallback(()=>{
-        console.log('BEFORE PICKED SYMBOL',pickedSymbols);
         const rightSequence = symbolsToPick(pickedSymbols)
-        console.log(rightSequence)
+        console.log('rightSequence',rightSequence)
+        setRightSequence([...rightSequence]);
     },[pickedSymbols]);
 
 
@@ -49,8 +52,26 @@ export const ModuleSymbols = ()=>{
                             )
                         )
                     }
-                    <Button title='Valider' onPress={handleRightSequence}/>
                 </View>
+                    <Button title='Valider' onPress={handleRightSequence}/>
+                <View style={styles.resultContainer}>
+                    {rightSequence.length > 0 &&(
+                        <Text>Votre résultat</Text>
+                    )}
+                    <View style={styles.rightSequenceContainer}>
+                        {rightSequence.length > 0 && rightSequence.map((symbol,index)=>(
+                            <View key={index}>
+                                <Image
+                                    style={styles.symbols}
+                                    source={symbol.logo}
+                                    alt={symbol.alt}
+                                />
+                            </View>
+                        ))
+                        }
+                    </View>
+                </View>
+
             </View>}
         />
 
@@ -71,6 +92,19 @@ const styles = StyleSheet.create({
     },
     container:{
         alignItems:'center',
-        gap:40
+        flexDirection:"column",
+        gap:100
+    },
+    symbols:{
+        width:50,
+        height:50,
+    },
+    resultContainer:{
+        flexDirection:"column",
+        gap:10,
+    },
+    rightSequenceContainer:{
+      flexDirection:"row",
+      gap:10,
     }
 })
