@@ -1,4 +1,4 @@
-import {Button, Image, StyleSheet, Text, View} from "react-native";
+import {Button, Image, ScrollView, StyleSheet, Text, View} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
 import {useCallback, useEffect, useState} from "react";
 import {SafeAreaComponent} from "../../SafeAreaComponent";
@@ -39,7 +39,7 @@ export const ModuleSymbols = ()=>{
 
     return(
         <SafeAreaComponent children={
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
                 <Text>Choisissez les 4 symboles présent :</Text>
                 <View style={styles.imageContainer}>
                     {
@@ -72,7 +72,7 @@ export const ModuleSymbols = ()=>{
                     </View>
                 </View>
 
-            </View>}
+            </ScrollView>}
         />
 
 
