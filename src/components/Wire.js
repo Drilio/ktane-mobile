@@ -10,8 +10,12 @@ export const Wire = ({ content, color, handleWireColor }) => {
     }, []);
 
     function textColorBasedOnBg(bgColor) {
-        return bgColor === 'white' ? 'black' : 'white';  // Change 'white' to any light color if necessary
+        return bgColor === 'white' ? 'black' : 'white';
     }
+
+    const handleCloseModal = useCallback(()=>{
+        setModalVisible(false);
+    },[])
 
     return (
         <View style={styles.mainContent}>
@@ -31,7 +35,7 @@ export const Wire = ({ content, color, handleWireColor }) => {
                                 key={wireColor}
                                 onPress={() => {
                                     handleWireColor(wireColor);
-                                    setModalVisible(false);
+                                    handleCloseModal();
                                 }}
                                 style={[styles.colorButton, { backgroundColor: wireColor }]}
                             >
@@ -42,7 +46,7 @@ export const Wire = ({ content, color, handleWireColor }) => {
                         ))}
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(false)}
+                            onPress={handleCloseModal}
                         >
                             <Text style={styles.buttonText}>Fermer</Text>
                         </Pressable>

@@ -1,10 +1,11 @@
 import {Button, View, StyleSheet, Text} from "react-native";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {witchWireToCut} from "./wireToCut";
 import {WIRE_COLOR} from "../../utils";
 import {LastSerialNumberQuestion} from "../../components/LastSerialNumberQuestion";
 import {Wire} from "../../components/Wire";
 import {SafeAreaComponent} from "../../SafeAreaComponent";
+import {useIsFocused} from "@react-navigation/native";
 
 export const ModuleWire = () => {
     const [nbrWire, setNbrWire] = useState(0)
@@ -16,6 +17,9 @@ export const ModuleWire = () => {
     const [sixthWireColor, setSixthWireColor] = useState(WIRE_COLOR.white)
     const [wireToCut, setWireToCut] = useState(undefined)
     const [lastSerialNumberIsPair, setLastSerialNumberIsPair] = useState(false)
+    const isFocused = useIsFocused();
+
+    useEffect(()=>{},[isFocused]);
 
     const handleNmbrWire = useCallback((nbrWire) => {
         setWireToCut(undefined)
