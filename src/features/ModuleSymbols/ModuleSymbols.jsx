@@ -1,12 +1,38 @@
-import {Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {Button, StyleSheet, Text, View} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {SafeAreaComponent} from "../../SafeAreaComponent";
 import {SYMBOL} from "../../utils";
+import {symbolsToPick} from "./SymbolsToPick";
+import {ButtonSymbols} from "./ButtonSymbols";
 
 export const ModuleSymbols = ()=>{
+    const [pickedSymbols, setPickedSymbols] = useState([]);
+
     const isFocused = useIsFocused();
     useEffect(()=>{},[isFocused]);
+    console.log('JAI RELOAD')
+    const handlePickingSymbol= useCallback((newSymbol)=>{
+        setPickedSymbols(currentSymbols => {
+            const isSymbolIncluded = currentSymbols.some(symbol => symbol.name === newSymbol.name);
+            if (isSymbolIncluded) {
+                console.log('remove', currentSymbols);
+                return currentSymbols.filter(symbol => symbol.name !== newSymbol.name);
+            } else {
+                console.log('add', currentSymbols);
+                return [...currentSymbols, newSymbol];
+            }
+        });
+    },[]);
+
+
+    const handleRightSequence = useCallback(()=>{
+        console.log('BEFORE PICKED SYMBOL',pickedSymbols);
+        const rightSequence = symbolsToPick(pickedSymbols)
+        console.log(rightSequence)
+    },[pickedSymbols]);
+
+
 
     return(
         <SafeAreaComponent children={
@@ -14,23 +40,17 @@ export const ModuleSymbols = ()=>{
                 <Text>Choisissez les 4 symboles présent :</Text>
                 <View style={styles.imageContainer}>
                     {
-                    SYMBOL.map((symbol,index)=>(
-                        <Pressable
-                            key={index}
-                            onPress={()=>{console.log('I PRESS')}}
-                        >
-                            <Image
-                                style={styles.symbols}
-                                source={symbol.logo}
-                                alt={symbol.alt}
-                            />
-                        </Pressable>
+                        SYMBOL.map((symbol,index)=>(
+                                <ButtonSymbols
+                                    key={index}
+                                    handlePickingSymbol={handlePickingSymbol}
+                                    symbol={symbol}
+                                />
+                            )
                         )
-                    )
-                }
+                    }
+                    <Button title='Valider' onPress={handleRightSequence}/>
                 </View>
-                <Image
-                />
             </View>}
         />
 
@@ -39,10 +59,7 @@ export const ModuleSymbols = ()=>{
 }
 
 const styles = StyleSheet.create({
-    symbols:{
-        width:50,
-        height:50,
-    },
+
     imageContainer:{
         width:350,
         height:100,

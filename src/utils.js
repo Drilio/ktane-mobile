@@ -41,46 +41,57 @@ export const WIRE_COLOR = {
 
 export const SYMBOL = [
     {
+        name:'one',
         logo:symbol1,
         alt:'symbol'
     },
     {
+        name:'two',
         logo:symbol2,
         alt:'symbol'
     },
     {
+        name:'three',
         logo:symbol3,
         alt:'symbol'
     },
     {
+        name:'four',
         logo:symbol4,
         alt:'symbol'
     },
     {
+        name:'five',
         logo:symbol5,
         alt:'symbol'
     },
     {
+        name:'six',
         logo:symbol6,
         alt:'symbol'
     },
     {
+        name:'seven',
         logo:symbol7,
         alt:'symbol'
     },
     {
+        name:'eight',
         logo:symbol8,
         alt:'symbol'
     },
     {
+        name:'nine',
         logo:symbol9,
         alt:'symbol'
     },
     {
+        name:'ten',
         logo:symbol10,
         alt:'symbol'
     },
     {
+        name:'eleven',
         logo:symbol11,
         alt:'symbol'
     },
